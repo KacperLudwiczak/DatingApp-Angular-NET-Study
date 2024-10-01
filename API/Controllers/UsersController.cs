@@ -3,7 +3,7 @@ using API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace API;
+namespace API.Controllers;
 
 public class UsersController(DataContext context): BaseApiController {
 
