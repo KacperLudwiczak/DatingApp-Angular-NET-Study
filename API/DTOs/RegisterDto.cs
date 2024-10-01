@@ -2,9 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API;
 
-public class RegisterDto {
-[Required]
+public class RegisterDto 
+{
+    [Required]
     public required string Username {get; set;}
-[Required]
+    [Required]
     public required string Password {get; set;}
 }
