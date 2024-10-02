@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand" href="#">Dating App</a>
 
-    @if (loggedIn) {
+    @if (accountService.currentUser()) {
     <ul class="navbar-nav me-auto mb-2 mb-md-0">
       <li class="nav-item">
         <a class="nav-link">Matches</a>
@@ -14,7 +14,7 @@
         <a class="nav-link">Messages</a>
       </li>
     </ul>
-    } @if (loggedIn) {
+    } @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
       <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
       <div *dropdownMenu class="dropdown-menu">
@@ -23,7 +23,7 @@
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
     </div>
-    } @if (!loggedIn) {
+    } @if (!accountService.currentUser()) {
     <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex">
       <input
         name="username"
