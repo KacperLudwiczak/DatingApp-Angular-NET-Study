@@ -29,7 +29,7 @@ public class BugController(DataContext context) : BaseApiController
         return thing;
     }
 
-        [HttpGet("bad-request")]
+    [HttpGet("bad-request")]
     public ActionResult<AppUser> GetBadRequest()
     {
         return BadRequest("This was not a good request");
