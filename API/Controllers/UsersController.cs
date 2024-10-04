@@ -6,21 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class UsersController(DataContext context): BaseApiController 
+[Authorize]
+public class UsersController(IUserRepository userRepository): BaseApiController 
 {
-    [AllowAnonymous]
+
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() 
     {
-        var users = await context.Users.ToListAsync();
-        return users;
+        var users = await userRepository.GetUsersAsync();
+         return Ok(users);
     }
     
-    [Authorize]
-    [HttpGet("{id:int}")] // /api/users/id
-    public async Task<ActionResult<AppUser>> GetUser(int id) 
+    [HttpGet("{username}")] // /api/users/id
+    public async Task<ActionResult<AppUser>> GetUser(string username) 
     {
-        var user = await context.Users.FindAsync(id);
+        var user = await userRepository.GetUserByUsernameAsync(username);
         if(user == null) return NotFound();
         return user;
     }
