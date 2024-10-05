@@ -4,12 +4,14 @@
     <h1>Your profile</h1>
   </div>
   <div class="col-8">
+    @if (editForm.dirty) {
     <div class="alert alert-info p-2">
       <span>
         <strong>Information: </strong> You have made changes. Any unsaved
         changes will be lost
       </span>
     </div>
+    }
   </div>
   <div class="col-4">
     <div class="card">
@@ -37,7 +39,12 @@
         </div>
       </div>
       <div class="card-footer">
-        <button form="editForm" type="submit" class="btn btn-primary col-12">
+        <button
+          [disabled]="!editForm.dirty"
+          form="editForm"
+          type="submit"
+          class="btn btn-primary col-12"
+        >
           Save changes
         </button>
       </div>
@@ -46,7 +53,7 @@
   <div class="col-8">
     <tabset class="member-tabset">
       <tab heading="About {{ member.knownAs }}">
-        <form id="editForm" #editForm="ngForm">
+        <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()">
           <h4 class="mt-2">Description</h4>
           <textarea
             class="form-control"
