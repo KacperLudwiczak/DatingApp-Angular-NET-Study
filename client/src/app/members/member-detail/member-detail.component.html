@@ -1,5 +1,5 @@
 @if (member) {
-<div class="row">
+<div class="row mb-2">
   <div class="col-4">
     <div class="card">
       <img
@@ -50,7 +50,11 @@
         </div>
       </tab>
       <tab heading="Photos" #photoTab="tab">
-        <div class="mt-2"><p>Photo</p></div>
+        <div class="mt-2">
+          @if (photoTab.active) {
+          <gallery [items]="images" class="gallery"></gallery>
+          }
+        </div>
       </tab>
       <tab heading="Messages">
         <div class="mt-2"><p>Messages will go here</p></div>
