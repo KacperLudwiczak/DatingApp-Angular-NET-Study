@@ -3,19 +3,86 @@
   <div class="col-2">
     <img src="{{ photo.url }}" alt="photo of user" class="img-thumbnail mb-1" />
     <div class="text-center">
-      <button
-        class="btn btn-sm me-1"
-        [disabled]="photo.isMain"
-      >
-        Main
-      </button>
-      <button
-        class="btn btn-sm btn-danger"
-        [disabled]="photo.isMain"
-      >
+      <button class="btn btn-sm me-1" [disabled]="photo.isMain">Main</button>
+      <button class="btn btn-sm btn-danger" [disabled]="photo.isMain">
         <i class="fa fa-trash"></i>
       </button>
     </div>
   </div>
   }
+</div>
+
+<!-- ng file upload -->
+<div class="row mt-2">
+  <div class="col-md-12">
+    <h3>Add Photos</h3>
+    <div
+      ng2FileDrop
+      [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+      (fileOver)="fileOverBase($event)"
+      [uploader]="uploader"
+      class="card bg-faded p-3 text-center my-drop-zone"
+    >
+      <i class="fa fa-upload fa-3x"></i>
+      Drop photos here
+    </div>
+  </div>
+  <div class="col-md-12 mt-2 mb-2" *ngIf="uploader?.queue?.length">
+    <h3>Upload queue</h3>
+    <h6>Queue length: {{ uploader?.queue?.length }}</h6>
+    <table class="table mb-2">
+      <thead>
+        <tr>
+          <th scope="col" width="50%">Name</th>
+          <th scope="col">Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of uploader?.queue">
+          <td>
+            <strong>{{ item?.file?.name }}</strong>
+          </td>
+          <td *ngIf="uploader?.options?.isHTML5" nowrap>
+            {{ item?.file?.size / 1024 / 1024 | number : ".2" }} MB
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <div class="mb-2">
+      <h6>Queue progress:</h6>  
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            [ngStyle]="{ width: uploader?.progress + '%' }"
+          ></div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-success btn-s me-2"
+        (click)="uploader?.uploadAll()"
+        [disabled]="!uploader?.getNotUploadedItems()?.length"
+      >
+        <span class="fa fa-upload"></span> Upload all
+      </button>   
+      <button
+        type="button"
+        class="btn btn-warning btn-s me-2"
+        (click)="uploader?.cancelAll()"
+        [disabled]="!uploader?.isUploading"
+      >
+        <span class="fa fa-ban"></span> Cancel all
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-s me-2"
+        (click)="uploader?.clearQueue()"
+        [disabled]="!uploader?.queue?.length"
+      >
+        <span class="fa fa-trash"></span> Remove all
+      </button>
+    </div>
+  </div>
 </div>
