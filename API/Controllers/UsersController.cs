@@ -19,7 +19,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         return Ok(users);
     }
 
-    [HttpGet("{username}")] // /api/users/id
+    [HttpGet("{username}")] // /api/users/username
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         var user = await userRepository.GetMemberAsync(username);
@@ -37,7 +37,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         return BadRequest("Failed to update the user");
     }
 
-    [HttpPost("add-photo")]
+    [HttpPost("add-photo")] // /api/users/add-photo
     public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
     {
         var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
