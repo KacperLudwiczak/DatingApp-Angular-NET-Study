@@ -45,10 +45,17 @@
     </ul>
     @if (accountService.currentUser()) {
     <div dropdown class="dropdown">
+      <img
+        class="me-1"
+        src="{{
+          accountService.currentUser()?.photoUrl || './assets/user.png'
+        }}"
+        alt="user main image"
+      />
       <a dropdownToggle class="dropdown-toggle text-light text-decoration-none"
         >Welcome {{ accountService.currentUser()?.userName | titlecase }}</a
       >
-      <div *dropdownMenu class="dropdown-menu">
+      <div *dropdownMenu class="dropdown-menu ms-4">
         <a routerLink="/member/edit" class="dropdown-item">Edit profile</a>
         <a class="dropdown-item" (click)="logout()">Logout</a>
       </div>
