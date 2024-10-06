@@ -52,7 +52,7 @@
       <tab heading="Photos" #photoTab="tab">
         <div class="mt-2">
           @if (photoTab.active) {
-          <gallery [items]="images" class="gallery"></gallery>
+          <gallery [items]="images" [itemAutosize]="true" class="gallery"></gallery>
           }
         </div>
       </tab>

@@ -3,7 +3,14 @@
   <div class="col-2">
     <img src="{{ photo.url }}" alt="photo of user" class="img-thumbnail mb-1" />
     <div class="text-center">
-      <button class="btn btn-sm me-1" [disabled]="photo.isMain">Main</button>
+      <button
+        class="btn btn-sm me-1"
+        [disabled]="photo.isMain"
+        (click)="setMainPhoto(photo)"
+        [ngClass]="photo.isMain ? 'btn-success active' : 'btn-outline-success'"
+      >
+        Main
+      </button>
       <button class="btn btn-sm btn-danger" [disabled]="photo.isMain">
         <i class="fa fa-trash"></i>
       </button>
@@ -50,7 +57,7 @@
     </table>
     <div>
       <div class="mb-2">
-      <h6>Queue progress:</h6>  
+        <h6>Queue progress:</h6>
         <div class="progress">
           <div
             class="progress-bar"
@@ -66,7 +73,7 @@
         [disabled]="!uploader?.getNotUploadedItems()?.length"
       >
         <span class="fa fa-upload"></span> Upload all
-      </button>   
+      </button>
       <button
         type="button"
         class="btn btn-warning btn-s me-2"
