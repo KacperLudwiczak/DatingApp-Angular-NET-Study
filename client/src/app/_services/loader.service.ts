@@ -12,7 +12,7 @@ export class LoaderService {
     this.loaderRequestCount++;
     this.spinnerService.show(undefined, {
       type: 'square-jelly-box',
-      bdColor: 'rgba(255,255,255,0)',
+      bdColor: 'rgba(0,0,0,0.3)',
       color: '#e83283',
     });
   }
