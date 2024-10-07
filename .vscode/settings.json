@@ -2,6 +2,8 @@
     "cSpell.words": [
         "bootswatch",
         "cloudinary",
+        "hmac",
+        "HMACSHA",
         "toastr"
     ]
 }
