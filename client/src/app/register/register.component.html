@@ -1,10 +1,50 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-center">Sign up</h2>
   <hr />
+
+  <div class="mb-3">
+    <label>I am a </label>
+    <label class="form-check-label ms-1">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="male"
+        formControlName="gender"
+      />
+      Male
+    </label>
+    <label class="form-check-label ms-1">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
+  </div>
+
   <app-text-input
     [formControl]="$any(registerForm.controls['username'])"
     [label]="'Username'"
   ></app-text-input>
+  <app-text-input
+    [formControl]="$any(registerForm.controls['knownAs'])"
+    [label]="'Known as'"
+  >
+  </app-text-input>
+  <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])">
+  </app-date-picker>
+  <app-text-input
+    [formControl]="$any(registerForm.controls['city'])"
+    [label]="'City'"
+  >
+  </app-text-input>
+  <app-text-input
+    [formControl]="$any(registerForm.controls['country'])"
+    [label]="'Country'"
+  >
+  </app-text-input>
   <app-text-input
     [formControl]="$any(registerForm.controls['password'])"
     [label]="'Password'"
