@@ -12,11 +12,12 @@ import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { JsonPipe, NgIf } from '@angular/common';
 import { TextInputComponent } from '../_forms/text-input/text-input.component';
+import { DatePickerComponent } from '../_forms/date-picker/date-picker.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent],
+  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent, DatePickerComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -27,9 +28,11 @@ export class RegisterComponent implements OnInit {
   cancelRegister = output<boolean>();
   model: any = {};
   registerForm: FormGroup = new FormGroup({});
+  maxDate = new Date();
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate.setFullYear(this.maxDate.getFullYear() - 18)
   }
 
   initializeForm() {
