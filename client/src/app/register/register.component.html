@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()">
+<form [formGroup]="registerForm" (ngSubmit)="register()" class="mb-2">
   <h2 class="text-center">Sign up</h2>
   <hr />
 
@@ -62,9 +62,25 @@
   >
   </app-text-input>
 
+  @if (validationErrors) {
+  <div class="alert alert-danger text-start">
+    <ul>
+      @for (error of validationErrors; track $index) {
+      <li>{{ error }}</li>
+      }
+    </ul>
+  </div>
+  }
+
   <div class="form-group text-center">
-    <button class="btn btn-success me-2" type="submit">Register</button>
-    <button class="btn btn-danger me-2" (click)="cancel()" type="button">
+    <button
+      [disabled]="!registerForm.valid"
+      class="btn btn-success me-2"
+      type="submit"
+    >
+      Register
+    </button>
+    <button class="btn btn-outline-danger me-2" (click)="cancel()" type="button">
       Cancel
     </button>
   </div>

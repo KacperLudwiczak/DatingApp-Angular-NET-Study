@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
-public class AccountController(DataContext context, ITokenService tokenService, IMapper mapper) : BaseApiController
+public class AccountController(DataContext context, ITokenService tokenService) : BaseApiController
 {
     [HttpPost("register")] // /api/account/register
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
@@ -19,8 +19,18 @@ public class AccountController(DataContext context, ITokenService tokenService, 
 
         using var hmac = new HMACSHA512();
 
-        var user = mapper.Map<AppUser>(registerDto);
-
+        // var user = mapper.Map<AppUser>(registerDto);
+         var user = new AppUser
+    {
+        UserName = registerDto.Username.ToLower(),
+        PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+        PasswordSalt = hmac.Key,
+        KnownAs = registerDto.KnownAs!,
+        Gender = registerDto.Gender!,
+        City = registerDto.City!,
+        Country = registerDto.Country!,
+        DateOfBirth = registerDto.DateOfBirth 
+    };
         user.UserName = registerDto.Username.ToLower();
         user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
         user.PasswordSalt = hmac.Key;
@@ -55,7 +65,7 @@ public class AccountController(DataContext context, ITokenService tokenService, 
         return new UserDto
         {
             UserName = user.UserName,
-                     KnownAs = user.KnownAs,
+            KnownAs = user.KnownAs,
             Token = tokenService.CreateToken(user),
             PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
         };
