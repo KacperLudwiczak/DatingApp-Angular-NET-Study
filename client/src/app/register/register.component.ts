@@ -69,8 +69,7 @@ export class RegisterComponent implements OnInit {
     };
   }
   register() {
-    const dob = this.getDateOnly(this.registerForm.get('dateOfBirth')?.value);
-    console.log('Formatted Date of Birth:', dob);
+    const dob = this.getDateOnly(this.registerForm.get('dateOfBirth')?.value);   
     this.registerForm.patchValue({ dateOfBirth: dob });
     this.accountService.register(this.registerForm.value).subscribe({
       next: () => this.router.navigateByUrl('/members'),
@@ -82,8 +81,9 @@ export class RegisterComponent implements OnInit {
     this.cancelRegister.emit(false);
   }
 
-    private getDateOnly(dob: string | undefined) {
+  private getDateOnly(dob: string | undefined) {
     if (!dob) return;
-    return new Date(dob).toISOString().slice(0, 10);
-  } 
+    return new Date(dob).toISOString().slice(0, 10); // Returns "YYYY-MM-DD"
+  }
+  
 }
