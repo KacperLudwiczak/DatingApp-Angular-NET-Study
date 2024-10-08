@@ -10,6 +10,9 @@ import { PaginatedResult } from '../_models/pagination';
   providedIn: 'root',
 })
 export class MembersService {
+  userParams() {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
   baseUrl = environment.apiUrl;
   // members = signal<Member[]>([]);
