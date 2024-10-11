@@ -5,6 +5,7 @@ import { Member } from '../_models/member';
 import { Photo } from '../_models/photo';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,10 @@ export class MembersService {
   getMembers(userParams: UserParams) {
     const response = this.memberCache.get(Object.values(userParams).join('-'));
     if (response) return this.setPaginatedResponse(response);
-    let params = this.setPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    let params = this.setPaginationHeaders(
+      userParams.pageNumber,
+      userParams.pageSize
+    );
 
     params = params.append('minAge', userParams.minAge);
     params = params.append('maxAge', userParams.maxAge);
@@ -35,15 +39,15 @@ export class MembersService {
         next: (response) => {
           this.setPaginatedResponse(response);
           this.memberCache.set(Object.values(userParams).join('-'), response);
-        }
+        },
       });
   }
 
   private setPaginatedResponse(response: HttpResponse<Member[]>) {
     this.paginatedResult.set({
       items: response.body as Member[],
-      pagination: JSON.parse(response.headers.get('Pagination')!)
-    })
+      pagination: JSON.parse(response.headers.get('Pagination')!),
+    });
   }
 
   private setPaginationHeaders(pageNumber: number, pageSize: number) {
@@ -56,8 +60,10 @@ export class MembersService {
   }
 
   getMember(username: string) {
-    // const member = this.members().find((x) => x.username === username);
-    // if (member !== undefined) return of(member);
+    const member: Member = [...this.memberCache.values()]
+      .reduce((array, element) => array.concat(element.body), [])
+      .find((m: Member) => m.username === username);
+    if (member) return of(member);
     return this.http.get<Member>(`${this.baseUrl}/users/${username}`);
   }
 

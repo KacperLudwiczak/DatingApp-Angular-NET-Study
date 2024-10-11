@@ -98,6 +98,7 @@
     [boundaryLinks]="true"
     [totalItems]="(memberService.paginatedResult()?.pagination)!.totalItems"
     [itemsPerPage]="(memberService.paginatedResult()?.pagination)!.itemsPerPage"
+    [(ngModel)]="memberService.paginatedResult()?.pagination!.currentPage"
     (pageChanged)="pageChanged($event)"
     [maxSize]="10"
     previousText="&lsaquo;"
