@@ -5,7 +5,8 @@
   <div class="d-flex">
     <div class="btn-group">
       <button
-        class="btn btn-primary"
+        class="btn btn-primary"        
+        style="width: 150px; height: 60px; padding: 10px"
         btnRadio="liked"
         [(ngModel)]="predicate"
         (click)="loadLikes()"
@@ -31,7 +32,7 @@
     </div>
   </div>
   <div class="row mt-3">
-    @for (member of members; track member.id) {
+    @for (member of likesService.paginatedResult()?.items; track member.id) {
     <div class="col-2">
       <app-member-card [member]="member"></app-member-card>
     </div>
@@ -39,3 +40,21 @@
   </div>
 </div>
 
+@if (likesService.paginatedResult()?.pagination) {
+<div class="d-flex justify-content-center">
+  <pagination
+    [boundaryLinks]="true"
+    [totalItems]="(likesService.paginatedResult()?.pagination)!.totalItems"
+    [itemsPerPage]="(likesService.paginatedResult()?.pagination)!.itemsPerPage"
+    (pageChanged)="pageChanged($event)"
+    [(ngModel)]="(likesService.paginatedResult()?.pagination)!.currentPage"
+    [maxSize]="10"
+    previousText="&lsaquo;"
+    nextText="&rsaquo;"
+    firstText="&laquo;"
+    lastText="&raquo;"
+  >
+  </pagination>
+</div>
+
+}
