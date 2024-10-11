@@ -1,4 +1,4 @@
-﻿using API.Controllers;
+using API.Controllers;
 using API.DTOs;
 using API.Extensions;
 using API.Helpers;
@@ -21,7 +21,7 @@ public class LikesController(ILikesRepository likesRepository) : BaseApiControll
             };
             likesRepository.AddLike(like);
         }
-        else 
+        else
         {
             likesRepository.DeleteLike(existingLike);
         }
@@ -34,9 +34,11 @@ public class LikesController(ILikesRepository likesRepository) : BaseApiControll
         return Ok(await likesRepository.GetCurrentUserLikeIds(User.GetUserId()));
     }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes(string predicate)
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes([FromQuery] LikesParams likesParams)
     {
-        var users = await likesRepository.GetUserLikes(predicate, User.GetUserId());
+        likesParams.UserId = User.GetUserId();
+        var users = await likesRepository.GetUserLikes(likesParams);
+        Response.AddPaginationHeader(users);
         return Ok(users);
     }
 }
