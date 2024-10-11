@@ -6,39 +6,43 @@ import { Photo } from '../_models/photo';
 import { PaginatedResult } from '../_models/pagination';
 import { UserParams } from '../_models/userParams';
 import { of } from 'rxjs';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MembersService {
-  userParams() {
-    throw new Error('Method not implemented.');
-  }
   private http = inject(HttpClient);
+  private accountService = inject(AccountService);
+  user = this.accountService.currentUser();
   baseUrl = environment.apiUrl;
-  // members = signal<Member[]>([]);
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
+  userParams = signal<UserParams>(new UserParams(this.user));
   memberCache = new Map();
 
-  getMembers(userParams: UserParams) {
-    const response = this.memberCache.get(Object.values(userParams).join('-'));
+  resetUserParams() {
+    this.userParams.set(new UserParams(this.user));
+  }
+  
+  getMembers() {
+    const response = this.memberCache.get(Object.values(this.userParams()).join('-'));
     if (response) return this.setPaginatedResponse(response);
     let params = this.setPaginationHeaders(
-      userParams.pageNumber,
-      userParams.pageSize
+      this.userParams().pageNumber,
+      this.userParams().pageSize
     );
 
-    params = params.append('minAge', userParams.minAge);
-    params = params.append('maxAge', userParams.maxAge);
-    params = params.append('gender', userParams.gender);
-    params = params.append('orderBy', userParams.orderBy);
+    params = params.append('minAge', this.userParams().minAge);
+    params = params.append('maxAge', this.userParams().maxAge);
+    params = params.append('gender', this.userParams().gender);
+    params = params.append('orderBy', this.userParams().orderBy);
 
     return this.http
       .get<Member[]>(`${this.baseUrl}/users`, { observe: 'response', params })
       .subscribe({
         next: (response) => {
           this.setPaginatedResponse(response);
-          this.memberCache.set(Object.values(userParams).join('-'), response);
+          this.memberCache.set(Object.values(this.userParams()).join('-'), response);
         },
       });
   }
