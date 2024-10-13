@@ -43,13 +43,13 @@
     <h6>Queue length: {{ uploader?.queue?.length }}</h6>
     <table class="table mb-2">
       <thead>
-        <tr>
+        <tr class="table-primary">
           <th scope="col" width="50%">Name</th>
           <th scope="col">Size</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of uploader?.queue">
+        <tr *ngFor="let item of uploader?.queue" class="table-primary">
           <td>
             <strong>{{ item?.file?.name }}</strong>
           </td>
