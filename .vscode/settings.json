@@ -4,6 +4,7 @@
         "cloudinary",
         "hmac",
         "HMACSHA",
+        "tabset",
         "timeago",
         "toastr"
     ]

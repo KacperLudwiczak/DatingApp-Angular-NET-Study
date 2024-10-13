@@ -22,17 +22,14 @@ export class MemberMessagesComponent implements OnInit {
   @ViewChild('messageForm') messageForm?: NgForm;
   private messageService = inject(MessageService);
   username = input.required<string>();
-  messages: Message[] =[];
-  messageContent = '';
+  messages = input.required<Message[]>();
   updateMessages = output<Message>();
+  messageContent = '';
+
 
   ngOnInit(): void {
-    this.loadMessages();
+ 
   }
 
-  loadMessages() {
-    this.messageService.getMessageThread(this.username()).subscribe({
-      next: messages => this.messages = messages
-    });
-  }
+
 }

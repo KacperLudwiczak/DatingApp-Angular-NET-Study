@@ -34,8 +34,8 @@
     </div>
   </div>
   <div class="col-8">
-    <tabset class="member-tabset">
-      <tab heading="About {{ member.knownAs }}">
+    <tabset class="member-tabset" #memberTabs>
+      <tab heading="About {{ member.knownAs }}" (selectTab)="onTabActivated($event)">
         <div class="mt-2">
           <h4>Description</h4>
           <p>{{ member.introduction }}</p>
@@ -43,21 +43,21 @@
           <p>{{ member.lookingFor }}</p>
         </div>
       </tab>
-      <tab heading="Interests">
+      <tab heading="Interests" (selectTab)="onTabActivated($event)">
         <div class="mt-2">
           <h4>Interests</h4>
           <p>{{ member.interests }}</p>
         </div>
       </tab>
-      <tab heading="Photos" #photoTab="tab">
+      <tab heading="Photos" #photoTab="tab" (selectTab)="onTabActivated($event)">
         <div class="mt-2">
           @if (photoTab.active) {
           <gallery [items]="images" [itemAutosize]="true" class="gallery"></gallery>
           }
         </div>
       </tab>
-      <tab heading="Messages">
-        <div class="mt-2"><app-member-messages [username]="member.username"></app-member-messages></div>
+      <tab heading="Messages" (selectTab)="onTabActivated($event)">
+        <div class="mt-2"><app-member-messages [username]="member.username" [messages]="messages"></app-member-messages></div>
       </tab>
     </tabset>
   </div>
