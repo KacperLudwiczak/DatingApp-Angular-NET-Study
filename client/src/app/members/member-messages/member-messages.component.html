@@ -36,7 +36,7 @@
         }
     </div>
     <div class="card-footer">
-        <form #messageForm="ngForm">
+        <form #messageForm="ngForm" (ngSubmit)="sendMessage()">
             <div class="d-flex">
                 <input 
                     name="messageContent"

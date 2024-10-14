@@ -18,7 +18,7 @@ import { FormsModule, NgForm } from '@angular/forms';
   templateUrl: './member-messages.component.html',
   styleUrl: './member-messages.component.css',
 })
-export class MemberMessagesComponent implements OnInit {
+export class MemberMessagesComponent {
   @ViewChild('messageForm') messageForm?: NgForm;
   private messageService = inject(MessageService);
   username = input.required<string>();
@@ -26,10 +26,14 @@ export class MemberMessagesComponent implements OnInit {
   updateMessages = output<Message>();
   messageContent = '';
 
-
-  ngOnInit(): void {
- 
+  sendMessage() {
+    this.messageService
+      .sendMessage(this.username(), this.messageContent)
+      .subscribe({
+        next: (message) => {
+          this.updateMessages.emit(message);
+          this.messageForm?.reset();
+        },
+      });
   }
-
-
 }
