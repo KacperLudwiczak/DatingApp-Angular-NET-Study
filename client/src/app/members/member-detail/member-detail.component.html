@@ -1,4 +1,3 @@
-@if (member) {
 <div class="row mb-2">
   <div class="col-4">
     <div class="card">
@@ -22,20 +21,25 @@
         </div>
         <div>
           <strong>Member since:</strong>
-          <p>{{ member.created | date: "dd MMM yyyy" }}</p>
+          <p>{{ member.created | date : "dd MMM yyyy" }}</p>
         </div>
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
           <button class="btn btn-primary">Like</button>
-          <button (click)="selectTab('Messages')" class="btn btn-success">Message</button>
+          <button (click)="selectTab('Messages')" class="btn btn-success">
+            Message
+          </button>
         </div>
       </div>
     </div>
   </div>
   <div class="col-8">
     <tabset class="member-tabset" #memberTabs>
-      <tab heading="About {{ member.knownAs }}" (selectTab)="onTabActivated($event)">
+      <tab
+        heading="About {{ member.knownAs }}"
+        (selectTab)="onTabActivated($event)"
+      >
         <div class="mt-2">
           <h4>Description</h4>
           <p>{{ member.introduction }}</p>
@@ -49,17 +53,29 @@
           <p>{{ member.interests }}</p>
         </div>
       </tab>
-      <tab heading="Photos" #photoTab="tab" (selectTab)="onTabActivated($event)">
+      <tab
+        heading="Photos"
+        #photoTab="tab"
+        (selectTab)="onTabActivated($event)"
+      >
         <div class="mt-2">
           @if (photoTab.active) {
-          <gallery [items]="images" [itemAutosize]="true" class="gallery"></gallery>
+          <gallery
+            [items]="images"
+            [itemAutosize]="true"
+            class="gallery"
+          ></gallery>
           }
         </div>
       </tab>
       <tab heading="Messages" (selectTab)="onTabActivated($event)">
-        <div class="mt-2"><app-member-messages [username]="member.username" [messages]="messages"></app-member-messages></div>
+        <div class="mt-2">
+          <app-member-messages
+            [username]="member.username"
+            [messages]="messages"
+          ></app-member-messages>
+        </div>
       </tab>
     </tabset>
   </div>
 </div>
-}
