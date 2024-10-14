@@ -15,12 +15,16 @@
         </button>
       </li>
       <li class="list-inline-item">
-        <button  (click)="toggleLike()" class="btn btn-primary btn-sm">
+        <button (click)="toggleLike()" class="btn btn-primary btn-sm">
           <i class="fa fa-heart"></i>
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn-primary btn-sm">
+        <button
+          routerLink="/members/{{ member().username }}"
+          [queryParams]="{ tab: 'Messages' }"
+          class="btn btn-primary btn-sm"
+        >
           <i class="fa fa-envelope"></i>
         </button>
       </li>
@@ -29,10 +33,10 @@
   <div class="card-body p-1">
     <h6 class="card-title text-center mb-1">
       <i class="fa fa-user me-1"></i>
-      {{ member().knownAs }}, {{member().age}}
+      {{ member().knownAs }}, {{ member().age }}
       @if (hasLiked()) {
-        <i class="fa fa-heart ms-1" style="color: #e83283"></i>
-    }
+      <i class="fa fa-heart ms-1" style="color: #e83283"></i>
+      }
     </h6>
     <p class="card-text text-muted text-center">{{ member().city }}</p>
   </div>

@@ -18,7 +18,7 @@ import { MessageService } from '../../_services/message.service';
   styleUrl: './member-detail.component.css'
 })
 export class MemberDetailComponent implements OnInit {
-  @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
+  @ViewChild('memberTabs') memberTabs?: TabsetComponent;
   private messageService = inject(MessageService);
   private memberService = inject(MembersService);
   private route = inject(ActivatedRoute);
@@ -28,7 +28,20 @@ export class MemberDetailComponent implements OnInit {
   messages: Message[] = [];
 
   ngOnInit(): void {
-    this.loadMember()
+    this.loadMember();
+
+    this.route.queryParams.subscribe({
+      next: params => {
+        params['tab'] && this.selectTab(params['tab'])
+      }
+    })
+  }
+
+  selectTab(heading: string) {
+    if (this.memberTabs) {
+      const messageTab = this.memberTabs.tabs.find(x => x.heading === heading);
+      if (messageTab) messageTab.active = true;
+    }
   }
 
   onTabActivated(data: TabDirective) {
