@@ -18,5 +18,8 @@ public class AutoMapperProfiles : Profile
         CreateMap<Message, MessageDto>()
             .ForMember(destination => destination.SenderPhotoUrl, option => option.MapFrom(source => source.Sender.Photos.FirstOrDefault(x => x.IsMain)!.Url))
             .ForMember(destination => destination.RecipientPhotoUrl, option => option.MapFrom(source => source.Recipient.Photos.FirstOrDefault(x => x.IsMain)!.Url));
+        CreateMap<DateTime, DateTime>().ConvertUsing(date => DateTime.SpecifyKind(date, DateTimeKind.Utc));
+        CreateMap<DateTime?, DateTime?>().ConvertUsing(date => date.HasValue
+            ? DateTime.SpecifyKind(date.Value, DateTimeKind.Utc) : null);
     }
 }
