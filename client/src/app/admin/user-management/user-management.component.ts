@@ -35,16 +35,16 @@ export class UserManagementComponent implements OnInit {
       }
     }
     this.bsModalRef = this.modalService.show(RolesModalComponent, initialState);
-    // this.bsModalRef.onHide?.subscribe({
-    //   next: () => {
-    //     if (this.bsModalRef.content && this.bsModalRef.content.rolesUpdated) {
-    //       const selectedRoles = this.bsModalRef.content.selectedRoles;
-    //       this.adminService.updateUserRoles(user.username, selectedRoles).subscribe({
-    //         next: roles => user.roles = roles
-    //       })
-    //     }
-    //   }
-    // })
+    this.bsModalRef.onHide?.subscribe({
+      next: () => {
+        if (this.bsModalRef.content && this.bsModalRef.content.rolesUpdated) {
+          const selectedRoles = this.bsModalRef.content.selectedRoles;
+          this.adminService.updateUserRoles(user.username, selectedRoles).subscribe({
+            next: roles => user.roles = roles
+          })
+        }
+      }
+    })
   }
 
   getUsersWithRoles() {
