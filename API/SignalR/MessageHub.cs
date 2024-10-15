@@ -46,12 +46,12 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
             RecipientUsername = recipient.UserName,
             Content = createMessageDto.Content
         };
-        // var groupName = GetGroupName(sender.UserName, recipient.UserName);
-        // var group = await messageRepository.GetMessageGroup(groupName);
-        // if (group != null && group.Connections.Any(x => x.Username == recipient.UserName))
-        // {
-        //     message.DateRead = DateTime.UtcNow;
-        // } 
+        var groupName = GetGroupName(sender.UserName, recipient.UserName);
+        var group = await messageRepository.GetMessageGroup(groupName);
+        if (group != null && group.Connections.Any(x => x.Username == recipient.UserName))
+        {
+            message.DateRead = DateTime.UtcNow;
+        } 
         // else 
         // {
         //     var connections = await PresenceTracker.GetConnectionsForUser(recipient.UserName);
@@ -64,8 +64,7 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
         messageRepository.AddMessage(message);
         if (await messageRepository.SaveAllAsync())
         {
-            var group = GetGroupName(sender.UserName, recipient.UserName);
-            await Clients.Group(group).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
+            await Clients.Group(groupName).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
         }
     }
 
