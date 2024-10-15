@@ -32,7 +32,9 @@
   </div>
   <div class="card-body p-1">
     <h6 class="card-title text-center mb-1">
-      <i class="fa fa-user me-1"></i>
+      <span [class.is-online]="isOnline()"
+        ><i class="fa fa-user me-1"></i
+      ></span>
       {{ member().knownAs }}, {{ member().age }}
       @if (hasLiked()) {
       <i class="fa fa-heart ms-1" style="color: #e83283"></i>

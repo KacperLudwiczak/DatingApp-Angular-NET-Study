@@ -7,6 +7,11 @@
         class="card-img p-2 rounded"
       />
       <div class="card-body">
+        @if (presenceService.onlineUsers().includes(member.username)) {
+        <div class="mb-1">
+          <i class="fa fa-user-circle" style=" color: rgb(1, 189, 42); font-size: 20px;"></i> Online now
+        </div>
+        }
         <div>
           <strong>Location:</strong>
           <p>{{ member.city }} | {{ member.country }}</p>
