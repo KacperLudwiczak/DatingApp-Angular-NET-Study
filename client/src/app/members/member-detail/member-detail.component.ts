@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '../../_models/member';
 import { TabDirective, TabsetComponent, TabsModule } from 'ngx-bootstrap/tabs';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
@@ -30,6 +30,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   private accountService = inject(AccountService);
   presenceService = inject(PresenceService);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   member: Member = {} as Member;
   images: GalleryItem[] = [];
   activeTab?: TabDirective;
@@ -64,6 +65,11 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   onTabActivated(data: TabDirective) {
     this.activeTab = data;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {tab: this.activeTab.heading},
+      queryParamsHandling: 'merge'
+    })
     if (
       this.activeTab.heading === 'Messages' &&
       this.member

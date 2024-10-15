@@ -5,7 +5,8 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.SignalR;
 namespace API.SignalR;
-public class MessageHub(IMessageRepository messageRepository, IUserRepository userRepository, IMapper mapper, IHubContext<PresenceHub> presenceHub) : Hub
+public class MessageHub(IMessageRepository messageRepository, IUserRepository userRepository,
+    IMapper mapper, IHubContext<PresenceHub> presenceHub) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -27,7 +28,6 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
         await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
         await base.OnDisconnectedAsync(exception);
     }
-
     public async Task SendMessage(CreateMessageDto createMessageDto)
     {
         var username = Context.User?.GetUsername() ?? throw new Exception("could not get user");
@@ -67,7 +67,6 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
             await Clients.Group(groupName).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
         }
     }
-
     private async Task<Group> AddToGroup(string groupName)
     {
         var username = Context.User?.GetUsername() ?? throw new Exception("Cannot get username");
@@ -82,7 +81,6 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
         if (await messageRepository.SaveAllAsync()) return group;
         throw new HubException("Failed to join group");
     }
-
     private async Task<Group> RemoveFromMessageGroup()
     {
         var group = await messageRepository.GetGroupForConnection(Context.ConnectionId);
@@ -94,8 +92,6 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
         }
         throw new Exception("Failed to remove from group");
     }
-
-
     private string GetGroupName(string caller, string? other)
     {
         var stringCompare = string.CompareOrdinal(caller, other) < 0;

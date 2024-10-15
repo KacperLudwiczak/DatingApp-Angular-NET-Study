@@ -39,7 +39,7 @@ public class PresenceTracker
         string[] onlineUsers;
         lock(OnlineUsers)
         {
-            onlineUsers = OnlineUsers.OrderBy(key => key.Key).Select(key => key.Key).ToArray();
+            onlineUsers = OnlineUsers.OrderBy(k => k.Key).Select(k => k.Key).ToArray();
         }
         return Task.FromResult(onlineUsers);
     }
@@ -59,4 +59,4 @@ public class PresenceTracker
         }
         return Task.FromResult(connectionIds);
     }
-}  
+}   

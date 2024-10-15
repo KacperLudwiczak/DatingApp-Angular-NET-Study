@@ -2,7 +2,6 @@ using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 namespace API.SignalR;
-
 [Authorize]
 public class PresenceHub(PresenceTracker tracker) : Hub
 {
