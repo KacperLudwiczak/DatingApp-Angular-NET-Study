@@ -42,44 +42,46 @@
           }
         </select>
       </div>
-      <button
-        class="btn btn-primary mx-1"
-        style="width: 120px; height: 60px; padding: 10px"
-        type="submit"
-      >
-        Apply filters
-      </button>
-      <button
-        (click)="resetFilters()"
-        class="btn btn-info mx-1"
-        style="width: 120px; height: 60px; padding: 10px"
-        type="button"
-      >
-        Reset filters
-      </button>
-      <div class="col">
-        <div class="btn-group float-end">
-          <button
-            type="button"
-            class="btn btn-primary"
-            style="width: 120px; height: 60px; padding: 10px"
-            name="orderBy"
-            (click)="loadMembers()"
-            btnRadio="lastActive"
-            [(ngModel)]="memberService.userParams().orderBy"
-          >
-            Last Active
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"            
-            name="orderBy"
-            (click)="loadMembers()"
-            btnRadio="created"
-            [(ngModel)]="memberService.userParams().orderBy"
-          >
-            Newest Members
-          </button>
+      <div class="d-flex">
+        <button
+          class="btn btn-primary mx-1"
+          style="width: 120px; height: 60px; padding: 10px"
+          type="submit"
+        >
+          Apply filters
+        </button>
+        <button
+          (click)="resetFilters()"
+          class="btn btn-info mx-1"
+          style="width: 120px; height: 60px; padding: 10px"
+          type="button"
+        >
+          Reset filters
+        </button>
+        <div class="col">
+          <div class="btn-group float-end ms-1">
+            <button
+              type="button"
+              class="btn btn-primary"
+              style="width: 120px; height: 60px; padding: 10px"
+              name="orderBy"
+              (click)="loadMembers()"
+              btnRadio="lastActive"
+              [(ngModel)]="memberService.userParams().orderBy"
+            >
+              Last Active
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              name="orderBy"
+              (click)="loadMembers()"
+              btnRadio="created"
+              [(ngModel)]="memberService.userParams().orderBy"
+            >
+              Newest Members
+            </button>
+          </div>
         </div>
       </div>
     </form>
@@ -98,7 +100,7 @@
     [boundaryLinks]="true"
     [totalItems]="(memberService.paginatedResult()?.pagination)!.totalItems"
     [itemsPerPage]="(memberService.paginatedResult()?.pagination)!.itemsPerPage"
-    [(ngModel)]="memberService.paginatedResult()?.pagination!.currentPage"
+    [(ngModel)]="(memberService.paginatedResult()?.pagination)!.currentPage"
     (pageChanged)="pageChanged($event)"
     [maxSize]="10"
     previousText="&lsaquo;"
