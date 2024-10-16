@@ -27,7 +27,7 @@ export class UserManagementComponent implements OnInit {
       class: 'modal-lg',
       initialState: {
         title: 'User roles',
-        username: user.username,
+        username: user.userName,
         selectedRoles: [...user.roles],
         availableRoles: ['Admin', 'Moderator', 'Member'],
         users: this.users,
@@ -39,7 +39,7 @@ export class UserManagementComponent implements OnInit {
       next: () => {
         if (this.bsModalRef.content && this.bsModalRef.content.rolesUpdated) {
           const selectedRoles = this.bsModalRef.content.selectedRoles;
-          this.adminService.updateUserRoles(user.username, selectedRoles).subscribe({
+          this.adminService.updateUserRoles(user.userName, selectedRoles).subscribe({
             next: roles => user.roles = roles
           })
         }
