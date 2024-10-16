@@ -15,11 +15,29 @@ img {
   margin: 0;
   padding: 0;
 }
+
 .chat li {
   margin-bottom: 10px;
   padding-bottom: 10px;
 }
+
 .card-footer {
     padding: 10px 15px;
     border-top: none;
   }
+
+
+/* Custom Scrollbar */
+.chat::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat::-webkit-scrollbar-thumb {
+  background-color: #888; /* Darker shade for scrollbar */
+  border-radius: 25px;
+}
+
+.chat::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Lighter on hover */
+}
+
