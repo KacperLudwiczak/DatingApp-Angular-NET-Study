@@ -6,6 +6,7 @@
         "HMACSHA",
         "tabset",
         "timeago",
-        "toastr"
+        "toastr",
+        "wwwroot"
     ]
 }
