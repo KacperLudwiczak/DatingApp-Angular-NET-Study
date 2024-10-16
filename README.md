@@ -45,14 +45,7 @@ This is a web application designed for dating, built using **Angular** for the f
 
 - **Node.js** version 12+ (for Angular)
 - **.NET SDK** version 5.0+ (for ASP.NET Core)
-- **SQLite** as the database
-
-### Future Enhancements
-
-- Advanced filtering options for users based on multiple criteria.
-- Integration with third-party APIs for user verification.
-- Real-time notifications for messages and likes.
-- Payment integration for premium features.
+- **SQL Server** as the database
 
 ### Author
 - [Kacper Ludwiczak](https://github.com/KacperLudwiczak) - Software Developer
